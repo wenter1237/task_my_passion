@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title>Caesar Cipher Output</title>
+  </head>
+  <body>
+    <h1>Encrypted Text:</h1>
+    <p id="encrypted_text"></p>
+
+    <h1>Decrypted Text:</h1>
+    <p id="decrypted_text"></p>
+
+    <input type="number" id="shift_input" value="4">
+    <button onclick="decrypt()">Decrypt</button>
+
+    <script>
+      function caesar_cipher_encrypt(plaintext, shift) {
+        let ciphertext = "";
+        for (let char of plaintext) {
+          if (char.match(/[a-z]/i)) {
+            let shift_amount = char.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0) + shift;
+            let new_char = String.fromCharCode((shift_amount % 26) + 'a'.charCodeAt(0));
+            if (char === char.toUpperCase()) {
+              new_char = new_char.toUpperCase();
+            }
+            ciphertext += new_char;
+          } else {
+            ciphertext += char;
+          }
+        }
+        return ciphertext;
+      }
+
+      function caesar_cipher_decrypt(ciphertext, shift) {
+  let plaintext = "";
+  for (let char of ciphertext) {
+    if (char.match(/[a-z]/i)) {
+      let shift_amount = char.toLowerCase().charCodeAt(0) - 'a'.charCodeAt(0) - shift;
+      if (shift_amount < 0) {
+        shift_amount = 26 + shift_amount;
+      }
+      let new_char = String.fromCharCode((shift_amount % 26) + 'a'.charCodeAt(0));
+      if (char === char.toUpperCase()) {
+        new_char = new_char.toUpperCase();
+      }
+      plaintext += new_char;
+    } else {
+      plaintext += char;
+    }
+  }
+  return plaintext;
+}
+
+
+      let plaintext = "As a passionate enthusiast of cryptography and programming, I am deeply fascinated by the intricacies and the power of coding. " +
+        "My interest in these fields started when I first learned about the Enigma machine, a device used by the Germans during World War II to encrypt their communications. " +
+        "The story of the Enigma machine and how Alan Turing and his team were able to crack its code still amazes me to this day. The idea that a seemingly simple machine could hold so much power and that a group of brilliant minds were able to unlock its secrets has inspired me to pursue a deeper understanding of cryptography and programming. " +
+        "These fields allow me to explore the limits of my creativity and imagination, and I find immense satisfaction in solving complex problems through code. " +
+        "I am driven by the challenge of creating secure and efficient systems, and I believe that cryptography and programming will play a crucial role in shaping our future. ";
+      let shift = 4;
+      let ciphertext = caesar_cipher_encrypt(plaintext, shift);
+      document.getElementById("encrypted_text").innerHTML = ciphertext;
+
+      function decrypt() {
+        let input_shift = document.getElementById("shift_input").value;
+if (input_shift === "4") {
+let decrypted_text = caesar_cipher_decrypt(ciphertext, shift);
+document.getElementById("decrypted_text").innerHTML = decrypted_text;
+} else {
+document.getElementById("decrypted_text").innerHTML = "Incorrect shift value entered.";
+}
+}
+</script>
+
+  </body>
+</html>
